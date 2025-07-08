@@ -37,8 +37,6 @@
 
 ## 🗂️ Featured Projects
 
-- 🔗 [ETL Data Pipeline Project](#)
-- 🔗 [Data Analytics Dashboard](#)
 
 ---
 
