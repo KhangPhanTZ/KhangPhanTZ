@@ -31,8 +31,7 @@
 
 ## 📫 Connect with Me
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-KhangPhanTZ-0A66C2?style=flat-square&logo=linkedin)](https://linkedin.com/in/your-link)  
-[![Gmail](https://img.shields.io/badge/Gmail-khangphantz@gmail.com-D14836?style=flat-square&logo=gmail&logoColor=white)](mailto:khangphantz@gmail.com)
+[![Gmail](https://img.shields.io/badge/Gmail-khangphantz@gmail.com-D14836?style=flat-square&logo=gmail&logoColor=white)](mailto:khangptv@gmail.com)
 
 ---
 
