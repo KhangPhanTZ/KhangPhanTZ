@@ -1,5 +1,5 @@
 #  About Me:
-Hi, I'm KhangPhanTZ, a Data Scientist with interest in MLOps.  <br>🔍 I love exploring data, asking questions, and turning complex information into meaningful insights.  <br> I value curiosity and critical thinking — qualities I believe are essential for a Data Scientist.  <br> I enjoy working with others, sharing knowledge, and learning new perspectives.  <br> My goal is to grow as a Data Scientist who not only builds models but also understands people and creates real impact.  <br>
+Hi, I'm KhangPhanTZ, a Data Scientist with interest in MLOps.  <br> I love exploring data, asking questions, and turning complex information into meaningful insights.  <br> I value curiosity and critical thinking — qualities I believe are essential for a Data Scientist.  <br> I enjoy working with others, sharing knowledge, and learning new perspectives.  <br> My goal is to grow as a Data Scientist who not only builds models but also understands people and creates real impact.  <br>
 
 
 ##  Socials:
