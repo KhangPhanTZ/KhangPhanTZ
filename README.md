@@ -1,6 +1,5 @@
 #  About Me:
-Hi, I'm KhangPhanTZ, a Data Scientist with interest in MLOps.  <br> I love exploring data, asking questions, and turning complex information into meaningful insights.  <br> I value curiosity and critical thinking — qualities I believe are essential for a Data Scientist.  <br> I enjoy working with others, sharing knowledge, and learning new perspectives.  <br> My goal is to grow as a Data Scientist who not only builds models but also understands people and creates real impact.  <br>
-
+Hi, I'm KhangPhanTZ, a Data Scientist with interest in MLOps. 
 
 ##  Socials:
 [![Facebook](https://img.shields.io/badge/Facebook-%231877F2.svg?logo=Facebook&logoColor=white)](https://facebook.com/https://www.facebook.com/khang.tran.852197) [![email](https://img.shields.io/badge/Email-D14836?logo=gmail&logoColor=white)](mailto:Khang.ptv@gmail.com) 
