@@ -52,15 +52,5 @@ Hi, I'm KhangPhanTZ, a Data Scientist with interest in MLOps.
 | **[Machine-Learning](https://github.com/KhangPhanTZ/Machine-learning)** | Collection of ML notebooks & experiments: preprocessing, classic models, metrics, visualization. | ![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white) ![NumPy](https://img.shields.io/badge/NumPy-013243?style=flat&logo=numpy&logoColor=white) ![Matplotlib](https://img.shields.io/badge/Matplotlib-11557C?style=flat&logo=matplotlib&logoColor=white) |
 
 
-#  GitHub Stats:
-![](https://github-readme-stats.vercel.app/api?username=KhangPhanTZ&theme=dark&hide_border=false&include_all_commits=true&count_private=true)<br/>
-![](https://nirzak-streak-stats.vercel.app/?user=KhangPhanTZ&theme=dark&hide_border=false)<br/>
-![](https://github-readme-stats.vercel.app/api/top-langs/?username=KhangPhanTZ&theme=dark&hide_border=false&include_all_commits=true&count_private=true&layout=compact)
-
-###  Top Contributed Repo
-![](https://github-contributor-stats.vercel.app/api?username=KhangPhanTZ&limit=5&theme=dark&combine_all_yearly_contributions=true)
-
----
-[![](https://visitcount.itsvg.in/api?id=KhangPhanTZ&icon=0&color=0)](https://visitcount.itsvg.in)
 
 <!-- Proudly created with GPRM ( https://gprm.itsvg.in ) -->
