@@ -6,12 +6,14 @@ from pathlib import Path
 
 OUT = Path(__file__).resolve().parent.parent / "assets"
 
-BG = "#F3EEE3"      # paper
-INK = "#2E2A26"     # ink
-MUTED = "#9A9184"   # soft grey-brown
+BG = "#1C1A18"      # warm charcoal
+FRAME = "#3D3833"   # frame line
+INK = "#EDE6D8"     # cream text
+MUTED = "#8C8478"   # soft grey-brown
+PANEL = "#100F0E"   # led panel
 ACCENT = "#E2725B"  # terracotta
-SAGE = "#6B8F71"    # sage green
-SKY = "#5B8BB0"     # dusty blue
+SAGE = "#7FA585"    # sage green
+SKY = "#6F9CC2"     # dusty blue
 SUN = "#E8B04B"     # mustard
 
 FONT = {
@@ -63,6 +65,7 @@ FONT = {
     ":": ["00000", "01100", "01100", "00000", "01100", "01100", "00000"],
     "+": ["00000", "00100", "00100", "11111", "00100", "00100", "00000"],
     "*": ["00000", "10101", "01110", "11111", "01110", "10101", "00000"],
+    "@": ["01110", "10001", "10111", "10101", "10111", "10000", "01111"],
     "&": ["01100", "10010", "10100", "01000", "10101", "10010", "01101"],
 }
 
@@ -105,7 +108,6 @@ def svg(w, h, body, title):
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" '
         f'viewBox="0 0 {w} {h}" shape-rendering="crispEdges" role="img">\n'
         f"<title>{title}</title>\n"
-        f'<rect width="{w}" height="{h}" fill="{BG}"/>\n'
         + "\n".join(body)
         + "\n</svg>\n"
     )
@@ -116,10 +118,11 @@ def frame(w, h, t=4, inset=10):
     a, b = inset, inset
     W, H = w - 2 * inset, h - 2 * inset
     return [
-        f'<rect x="{a + t}" y="{b}" width="{W - 2 * t}" height="{t}" fill="{INK}"/>',
-        f'<rect x="{a + t}" y="{b + H - t}" width="{W - 2 * t}" height="{t}" fill="{INK}"/>',
-        f'<rect x="{a}" y="{b + t}" width="{t}" height="{H - 2 * t}" fill="{INK}"/>',
-        f'<rect x="{a + W - t}" y="{b + t}" width="{t}" height="{H - 2 * t}" fill="{INK}"/>',
+        f'<rect x="{a + t}" y="{b + t}" width="{W - 2 * t}" height="{H - 2 * t}" fill="{BG}"/>',
+        f'<rect x="{a + t}" y="{b}" width="{W - 2 * t}" height="{t}" fill="{FRAME}"/>',
+        f'<rect x="{a + t}" y="{b + H - t}" width="{W - 2 * t}" height="{t}" fill="{FRAME}"/>',
+        f'<rect x="{a}" y="{b + t}" width="{t}" height="{H - 2 * t}" fill="{FRAME}"/>',
+        f'<rect x="{a + W - t}" y="{b + t}" width="{t}" height="{H - 2 * t}" fill="{FRAME}"/>',
     ]
 
 
@@ -159,7 +162,7 @@ def banner():
     mx = nx + 44
     mq_w = text_width("arman tsarukyan", 6) - 44
     body += text("aka", mx - 44, 140, 2, MUTED)
-    body += marquee("toixaydungkhacbiet * ai engineer *", mx, 130, mq_w, 34, 3, SUN, INK)
+    body += marquee("toixaydungkhacbiet * ai engineer *", mx, 130, mq_w, 34, 3, SUN, PANEL)
 
     line = "> i can make it happen"
     lx = center(line, 2) - 8
@@ -205,8 +208,61 @@ def inventory():
     return svg(W, H, body, "Tech stack")
 
 
+# --------------------------------------------------------------------------- projects
+PROJECTS = [
+    ("course-recommender", "course recommender",
+     "simple mooc recommender: data prep, baselines, evaluated with precision@k, recall@k and map.",
+     [("python", ACCENT), ("pandas", ACCENT), ("scikitlearn", ACCENT), ("streamlit", SUN)]),
+    ("azure-ecommerce-db", "azure e-commerce db",
+     "mysql schema + redis cache for sessions, carts and hot items, with power bi dashboards.",
+     [("mysql", SAGE), ("redis", SAGE), ("azure", SKY), ("powerbi", SUN)]),
+    ("machine-learning", "machine-learning",
+     "notebooks & experiments: preprocessing, classic models, metrics, visualization.",
+     [("python", ACCENT), ("numpy", ACCENT), ("matplotlib", SUN)]),
+]
+
+
+def wrap(s, n):
+    lines, cur = [], ""
+    for w in s.split():
+        if cur and len(cur) + 1 + len(w) > n:
+            lines.append(cur)
+            cur = w
+        else:
+            cur = f"{cur} {w}".strip()
+    return lines + [cur]
+
+
+def icon(name, x, y, size, color):
+    import re
+    src = (OUT / "icons" / f"{name}.svg").read_text()
+    inner = re.search(r"<svg[^>]*>(.*)</svg>", src, re.S).group(1)
+    inner = re.sub(r"<title>.*?</title>", "", inner)
+    return (f'<svg x="{x}" y="{y}" width="{size}" height="{size}" viewBox="0 0 24 24" '
+            f'fill="{color}" shape-rendering="geometricPrecision">{inner}</svg>')
+
+
+def project_card(title, desc, icons):
+    W = 880
+    lines = wrap(desc, (W - 80) // 12)
+    H = 40 + 21 + 14 + len(lines) * 22 + 14 + 22 + 30
+    body = frame(W, H)
+    body += text(title, 40, 36, 3, INK)
+    body += text("> repo", W - 40 - text_width("> repo", 2), 40, 2, MUTED)
+    y = 36 + 21 + 16
+    for ln in lines:
+        body += text(ln, 40, y, 2, MUTED)
+        y += 22
+    y += 10
+    for k, (name, color) in enumerate(icons):
+        body.append(icon(name, 40 + k * 34, y, 22, color))
+    return svg(W, H, body, title)
+
+
 if __name__ == "__main__":
     OUT.mkdir(exist_ok=True)
     (OUT / "banner.svg").write_text(banner())
     (OUT / "inventory.svg").write_text(inventory())
+    for slug, title, desc, icons in PROJECTS:
+        (OUT / f"project-{slug}.svg").write_text(project_card(title, desc, icons))
     print("written to", OUT)
