@@ -62,6 +62,7 @@ FONT = {
     "!": ["00100", "00100", "00100", "00100", "00100", "00000", "00100"],
     ":": ["00000", "01100", "01100", "00000", "01100", "01100", "00000"],
     "+": ["00000", "00100", "00100", "11111", "00100", "00100", "00000"],
+    "*": ["00000", "10101", "01110", "11111", "01110", "10101", "00000"],
     "&": ["01100", "10010", "10100", "01000", "10101", "10010", "01101"],
 }
 
@@ -130,58 +131,96 @@ def blink(inner, dur="1.1s", begin="0s"):
 
 
 # --------------------------------------------------------------------------- banner
-PERSON = [
-    "........................",
-    ".........KKKKKK.........",
-    "........KKKKKKKK........",
-    ".......KKKKKKKKKK.......",
-    ".......KKSSSSSSKK.......",
-    ".......KSSSSSSSSK.......",
-    ".......SSKSSSSKSS.......",
-    ".......SPSSSSSSPS.......",
-    "........SSKSSKSS........",
-    ".........SSKKSS.........",
-    "......HHHHHHHHHHHH......",
-    ".....HHHHHHHHHHHHHH.....",
-    "....HHHLLLLLLLLLLHHH....",
-    "....HHHLLLLLLLLLLHHH....",
-    "....HHHLLLLAALLLLHHH....",
-    "....HHHLLLLAALLLLHHH....",
-    "....HHHLLLLLLLLLLHHH....",
-    "CCC...HLLLLLLLLLLH...G..",
-    "CCCC..LLLLLLLLLLLL..GGG.",
-    "CCC...SSLLLLLLLLSS...N..",
-    "DDDDDDDDDDDDDDDDDDDDDDDD",
+DINO = [
+    "..............GGGGGGG...",
+    ".............GGGGGGGGG..",
+    ".............GGWKGGGGGG.",
+    ".............GGKKGGGGGG.",
+    "...........A.GGGGGGGGGG.",
+    "..........AA.GGGGG......",
+    ".........AAGGGGGGGGGG...",
+    "..G.....AAGGGGGGG.......",
+    "..G....AAGGGGBBBGG......",
+    "..GG..AGGGGGBBBBGGGG....",
+    "..GGGGGGGGGGBBBBG..G....",
+    "...GGGGGGGGGBBBBG.......",
+    "....GGGGGGGGBBBGG.......",
+    ".....GGGGGGGGGGG........",
 ]
-PERSON_PAL = {"K": INK, "S": "#F2C9A0", "P": "#EBA28C", "H": ACCENT,
-              "L": "#BDB5A8", "A": BG, "D": INK, "C": SKY, "G": SAGE, "N": "#8A6A4F"}
+LEGS_A = [
+    "......GGG...GGG.........",
+    "......GG.....GG.........",
+    "......GGG....GGG........",
+]
+LEGS_B = [
+    ".......GGG.GGG..........",
+    "........GG.GG...........",
+    "........GGGGGG..........",
+]
+GROUND = [
+    "CCC.....................G...",
+    "CCCC...................GGG..",
+    "CCC.....................N...",
+    "DDDDDDDDDDDDDDDDDDDDDDDDDDDD",
+]
+DINO_PAL = {"G": SAGE, "B": "#CFDDB8", "A": ACCENT, "W": BG, "K": INK}
+GROUND_PAL = {"D": INK, "C": SKY, "G": SAGE, "N": "#8A6A4F"}
 
 SPARKLE = ["..X..", "..X..", "XX.XX", "..X..", "..X.."]
+
+
+def frames(a, b, dur="0.5s"):
+    """Two-frame flip-book animation."""
+    return [blink(a, dur), blink(b, dur, f"-{float(dur[:-1]) / 2}s")]
+
+
+def marquee(s, x, y, w, h, px, color, bg, dur="9s"):
+    seg = s + "   "
+    seg_w = len(seg) * 6 * px
+    reps = w // seg_w + 2
+    out = [f'<clipPath id="mq"><rect x="{x}" y="{y}" width="{w}" height="{h}"/></clipPath>',
+           f'<rect x="{x}" y="{y}" width="{w}" height="{h}" fill="{bg}"/>',
+           '<g clip-path="url(#mq)"><g>',
+           f'<animateTransform attributeName="transform" type="translate" from="0 0" '
+           f'to="-{seg_w} 0" dur="{dur}" repeatCount="indefinite"/>']
+    out += text(seg * reps, x + 10, y + (h - 7 * px) // 2, px, color)
+    out.append("</g></g>")
+    return out
 
 
 def banner():
     W, H = 880, 250
     body = frame(W, H)
     cell = 7
-    px, py = 70, 68
-    body += runs(PERSON, px, py, cell, PERSON_PAL)
+    px, py = 52, 206 - 18 * cell
+    body += runs(DINO, px + 2 * cell, py, cell, DINO_PAL)
+    # eye blink: close the eye briefly
+    body.append(
+        f'<rect x="{px + 17 * cell}" y="{py + 2 * cell}" width="{2 * cell}" height="{2 * cell}" fill="{SAGE}" opacity="0">'
+        '<animate attributeName="opacity" values="0;0;1;0" keyTimes="0;0.9;0.95;1" dur="3.5s" repeatCount="indefinite"/></rect>'
+    )
+    body += frames(runs(LEGS_A, px + 2 * cell, py + 14 * cell, cell, DINO_PAL),
+                   runs(LEGS_B, px + 2 * cell, py + 14 * cell, cell, DINO_PAL))
+    body += runs(GROUND, px - 2 * cell, py + 14 * cell, cell, GROUND_PAL)
     # coffee steam
     steam = [".X.", "X..", ".X.", "..X"]
-    body.append(blink(runs(steam, px, py + 13 * cell, cell, {"X": MUTED}), "1.6s"))
+    body.append(blink(runs(steam, px - 2 * cell, py + 10 * cell, cell, {"X": MUTED}), "1.6s"))
     # sparkles
-    body.append(blink(runs(SPARKLE, 60, 38, 4, {"X": SUN}), "2s"))
-    body.append(blink(runs(SPARKLE, 236, 60, 4, {"X": SKY}), "2s", "1s"))
-    body.append(blink(runs(SPARKLE, 250, 186, 3, {"X": ACCENT}), "2.4s", "0.5s"))
+    body.append(blink(runs(SPARKLE, 48, 36, 4, {"X": SUN}), "2s"))
+    body.append(blink(runs(SPARKLE, 250, 48, 4, {"X": SKY}), "2s", "1s"))
+    body.append(blink(runs(SPARKLE, 140, 60, 3, {"X": ACCENT}), "2.4s", "0.5s"))
 
-    tx = 320
-    body += text("hi, i'm", tx, 52, 3, MUTED)
-    body += text("khang phan", tx, 84, 6, INK)
-    body += text("data scientist / mlops", tx, 148, 3, ACCENT)
+    tx = 290
+    body += text("hi, i'm", tx, 44, 3, MUTED)
+    body += text("arman tsarukyan", tx, 74, 5, INK)
+    body += text("aka", tx, 134, 2, MUTED)
+    body += marquee("toixaydungkhacbiet * data scientist * mlops *",
+                    tx + 44, 124, W - 40 - tx - 44, 34, 3, SUN, INK)
     line = "> notebooks in, pipelines out"
-    body += text(line, tx, 186, 2, SAGE)
+    body += text(line, tx, 182, 2, SAGE)
     cx = tx + text_width(line, 2) + 6
-    body.append(blink([f'<rect x="{cx}" y="{186}" width="10" height="14" fill="{SAGE}"/>']))
-    return svg(W, H, body, "KhangPhanTZ - data scientist / mlops")
+    body.append(blink([f'<rect x="{cx}" y="{182}" width="10" height="14" fill="{SAGE}"/>']))
+    return svg(W, H, body, "Arman Tsarukyan aka Toixaydungkhacbiet")
 
 
 # --------------------------------------------------------------------------- inventory

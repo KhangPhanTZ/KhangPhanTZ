@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./assets/banner.svg" alt="Hi, I'm Khang Phan - data scientist / mlops" width="100%">
+  <img src="./assets/banner.svg" alt="Hi, I'm Arman Tsarukyan aka Toixaydungkhacbiet - data scientist / mlops" width="100%">
 </p>
 
 <p align="center">
