@@ -188,8 +188,7 @@ SLOTS = [
 def inventory():
     W, H = 880, 290
     body = frame(W, H)
-    body += text("inventory", 40, 34, 3, INK)
-    body += text("lv. 99 ai engineer", W - 40 - text_width("lv. 99 ai engineer", 2), 38, 2, MUTED)
+    body += text("stack", 40, 34, 3, INK)
     # dashed divider
     for x in range(40, W - 40, 12):
         body.append(f'<rect x="{x}" y="66" width="6" height="3" fill="{MUTED}"/>')
@@ -203,7 +202,7 @@ def inventory():
             y = 126 + j * 24
             body.append(f'<rect x="{x}" y="{y + 4}" width="6" height="6" fill="{color}"/>')
             body += text(item, x + 16, y, 2, INK)
-    return svg(W, H, body, "Tech inventory")
+    return svg(W, H, body, "Tech stack")
 
 
 if __name__ == "__main__":
