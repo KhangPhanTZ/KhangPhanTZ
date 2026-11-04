@@ -157,19 +157,10 @@ LEGS_B = [
     "........GG.GG...........",
     "........GGGGGG..........",
 ]
-GROUND = [
-    "CCC.....................G...",
-    "CCCC...................GGG..",
-    "CCC.....................N...",
-    "DDDDDDDDDDDDDDDDDDDDDDDDDDDD",
-]
-DINO_PAL = {"G": SAGE, "B": "#CFDDB8", "A": ACCENT, "W": BG, "K": INK}
-GROUND_PAL = {"D": INK, "C": SKY, "G": SAGE, "N": "#8A6A4F"}
-
-SPARKLE = ["..X..", "..X..", "XX.XX", "..X..", "..X.."]
+DINO_PAL = {"G": INK, "B": INK, "A": INK, "W": BG, "K": BG}
 
 
-def frames(a, b, dur="0.5s"):
+def frames(a, b, dur="0.3s"):
     """Two-frame flip-book animation."""
     return [blink(a, dur), blink(b, dur, f"-{float(dur[:-1]) / 2}s")]
 
@@ -196,31 +187,33 @@ def banner():
     body += runs(DINO, px + 2 * cell, py, cell, DINO_PAL)
     # eye blink: close the eye briefly
     body.append(
-        f'<rect x="{px + 17 * cell}" y="{py + 2 * cell}" width="{2 * cell}" height="{2 * cell}" fill="{SAGE}" opacity="0">'
+        f'<rect x="{px + 17 * cell}" y="{py + 2 * cell}" width="{2 * cell}" height="{2 * cell}" fill="{INK}" opacity="0">'
         '<animate attributeName="opacity" values="0;0;1;0" keyTimes="0;0.9;0.95;1" dur="3.5s" repeatCount="indefinite"/></rect>'
     )
     body += frames(runs(LEGS_A, px + 2 * cell, py + 14 * cell, cell, DINO_PAL),
                    runs(LEGS_B, px + 2 * cell, py + 14 * cell, cell, DINO_PAL))
-    body += runs(GROUND, px - 2 * cell, py + 14 * cell, cell, GROUND_PAL)
-    # coffee steam
-    steam = [".X.", "X..", ".X.", "..X"]
-    body.append(blink(runs(steam, px - 2 * cell, py + 10 * cell, cell, {"X": MUTED}), "1.6s"))
-    # sparkles
-    body.append(blink(runs(SPARKLE, 48, 36, 4, {"X": SUN}), "2s"))
-    body.append(blink(runs(SPARKLE, 250, 48, 4, {"X": SKY}), "2s", "1s"))
-    body.append(blink(runs(SPARKLE, 140, 60, 3, {"X": ACCENT}), "2.4s", "0.5s"))
+    # ground: a solid line plus pebbles scrolling left, so the dino runs in place
+    gy = py + 17 * cell
+    gx, gw = 30, 240
+    body.append(f'<rect x="{gx}" y="{gy}" width="{gw}" height="4" fill="{INK}"/>')
+    body.append(f'<clipPath id="gr"><rect x="{gx}" y="{gy}" width="{gw}" height="20"/></clipPath>')
+    peb = "".join(f'<rect x="{gx + x}" y="{gy + y}" width="{w}" height="3" fill="{MUTED}"/>'
+                  for x, y, w in [(10, 10, 8), (55, 15, 4), (95, 9, 12), (140, 14, 4), (185, 10, 8),
+                                  (250, 10, 8), (295, 15, 4), (335, 9, 12), (380, 14, 4), (425, 10, 8)])
+    body.append('<g clip-path="url(#gr)"><g><animateTransform attributeName="transform" type="translate" '
+                f'from="0 0" to="-240 0" dur="2s" repeatCount="indefinite"/>{peb}</g></g>')
 
     tx = 290
     body += text("hi, i'm", tx, 44, 3, MUTED)
     body += text("arman tsarukyan", tx, 74, 5, INK)
     body += text("aka", tx, 134, 2, MUTED)
-    body += marquee("toixaydungkhacbiet * data scientist * mlops *",
+    body += marquee("toixaydungkhacbiet * ai engineer *",
                     tx + 44, 124, W - 40 - tx - 44, 34, 3, SUN, INK)
-    line = "> notebooks in, pipelines out"
+    line = "> building ai that ships"
     body += text(line, tx, 182, 2, SAGE)
     cx = tx + text_width(line, 2) + 6
     body.append(blink([f'<rect x="{cx}" y="{182}" width="10" height="14" fill="{SAGE}"/>']))
-    return svg(W, H, body, "Arman Tsarukyan aka Toixaydungkhacbiet")
+    return svg(W, H, body, "Arman Tsarukyan aka Toixaydungkhacbiet - AI engineer")
 
 
 # --------------------------------------------------------------------------- inventory
@@ -243,7 +236,7 @@ def inventory():
     W, H = 880, 290
     body = frame(W, H)
     body += text("inventory", 40, 34, 3, INK)
-    body += text("lv. 99 data wizard", W - 40 - text_width("lv. 99 data wizard", 2), 38, 2, MUTED)
+    body += text("lv. 99 ai engineer", W - 40 - text_width("lv. 99 ai engineer", 2), 38, 2, MUTED)
     # dashed divider
     for x in range(40, W - 40, 12):
         body.append(f'<rect x="{x}" y="66" width="6" height="3" fill="{MUTED}"/>')

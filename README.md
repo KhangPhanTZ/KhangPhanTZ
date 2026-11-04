@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="./assets/banner.svg" alt="Hi, I'm Arman Tsarukyan aka Toixaydungkhacbiet - data scientist / mlops" width="100%">
+  <img src="./assets/banner.svg" alt="Hi, I'm Arman Tsarukyan aka Toixaydungkhacbiet - AI engineer" width="100%">
 </p>
 
 <p align="center">
-  <sub>a data scientist who likes it when models leave the notebook and actually ship.</sub>
+  <sub>an ai engineer who likes it when models leave the notebook and actually ship.</sub>
 </p>
 
 <p align="center">
