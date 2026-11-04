@@ -242,27 +242,31 @@ def icon(name, x, y, size, color):
             f'fill="{color}" shape-rendering="geometricPrecision">{inner}</svg>')
 
 
-def project_card(title, desc, icons):
+def projects_card():
     W = 880
-    lines = wrap(desc, (W - 80) // 12)
-    H = 40 + 21 + 14 + len(lines) * 22 + 14 + 22 + 30
-    body = frame(W, H)
-    body += text(title, 40, 36, 3, INK)
-    body += text("> repo", W - 40 - text_width("> repo", 2), 40, 2, MUTED)
-    y = 36 + 21 + 16
-    for ln in lines:
-        body += text(ln, 40, y, 2, MUTED)
+    body, y = [], 34
+    body += text("projects", 40, y, 3, INK)
+    for x in range(40, W - 40, 12):
+        body.append(f'<rect x="{x}" y="66" width="6" height="3" fill="{MUTED}"/>')
+    y = 90
+    for _, title, desc, icons in PROJECTS:
+        body.append(f'<rect x="40" y="{y + 5}" width="6" height="6" fill="{icons[0][1]}"/>')
+        body += text(title, 56, y + 1, 2, INK)
+        ix = W - 40 - len(icons) * 30 + 8
+        for k, (name, color) in enumerate(icons):
+            body.append(icon(name, ix + k * 30, y - 2, 20, color))
+        y += 26
+        for ln in wrap(desc, (W - 96) // 12):
+            body += text(ln, 56, y, 2, MUTED)
+            y += 20
         y += 22
-    y += 10
-    for k, (name, color) in enumerate(icons):
-        body.append(icon(name, 40 + k * 34, y, 22, color))
-    return svg(W, H, body, title)
+    H = y + 6
+    return svg(W, H, frame(W, H) + body, "Projects")
 
 
 if __name__ == "__main__":
     OUT.mkdir(exist_ok=True)
-    (OUT / "banner.svg").write_text(banner())
-    (OUT / "inventory.svg").write_text(inventory())
-    for slug, title, desc, icons in PROJECTS:
-        (OUT / f"project-{slug}.svg").write_text(project_card(title, desc, icons))
+    (OUT / "hero.svg").write_text(banner())
+    (OUT / "stack.svg").write_text(inventory())
+    (OUT / "projects.svg").write_text(projects_card())
     print("written to", OUT)
