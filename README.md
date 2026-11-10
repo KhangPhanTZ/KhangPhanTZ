@@ -6,9 +6,7 @@
  <br>
 </p>
 
-<p align="center">
-  <img src="./assets/stack.svg" alt="Tech stack: AWS, Azure, GCP, Kubernetes, GitHub Actions, Git, Python, PyTorch, TensorFlow, scikit-learn, Pandas, NumPy, Postgres, MySQL, SQL Server, Redis, Power BI, Matplotlib, Notion, Trello" width="100%">
-</p>
+
 
 <p align="center">
   <a href="https://github.com/KhangPhanTZ?tab=repositories"><img src="./assets/projects.svg" alt="Projects: course recommender, azure e-commerce db, machine-learning" width="100%"></a>
