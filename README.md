@@ -1,21 +1,40 @@
-<p align="center">
-  <img src="./assets/hero.svg" alt="Hi, I'm Arman Tsarukyan aka Toixaydungkhacbiet - AI engineer" width="100%">
-</p>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./assets/header-dark.svg">
+  <img src="./assets/header-light.svg" alt="toixaydungkhacbiet — AI engineer. I can make it happen." width="100%">
+</picture>
 
-<p align="center">
- <br>
-</p>
+<br>
 
+I build machine learning systems and take them past the notebook — data, training, evaluation, and the MLOps work that keeps models running in production.
 
+<br>
 
-<p align="center">
-  <a href="https://github.com/KhangPhanTZ?tab=repositories"><img src="./assets/projects.svg" alt="Projects: course recommender, azure e-commerce db, machine-learning" width="100%"></a>
-</p>
+**Stack**
 
-<p align="center">
-  <sub>
-    <a href="https://github.com/KhangPhanTZ/course-recommender-simple">course recommender</a> ·
-    <a href="https://github.com/KhangPhanTZ/azure-ecommerce-DB">azure e-commerce db</a> ·
-    <a href="https://github.com/KhangPhanTZ/Machine-learning">machine-learning</a>
-  </sub>
-</p>
+<table>
+  <tr><td><sub>ML</sub></td><td>Python · PyTorch · TensorFlow · scikit-learn · Pandas · NumPy</td></tr>
+  <tr><td><sub>MLOps</sub></td><td>AWS · Azure · GCP · Kubernetes · GitHub Actions · Git</td></tr>
+  <tr><td><sub>Data</sub></td><td>PostgreSQL · MySQL · SQL Server · Redis · Power BI</td></tr>
+</table>
+
+<br>
+
+**Selected work**
+
+<table>
+  <tr>
+    <td><a href="https://github.com/KhangPhanTZ/course-recommender-simple"><b>Course Recommender</b></a></td>
+    <td>MOOC recommender with baseline models, evaluated on Precision@K, Recall@K and MAP.</td>
+    <td><sub>Python · scikit-learn · Streamlit</sub></td>
+  </tr>
+  <tr>
+    <td><a href="https://github.com/KhangPhanTZ/azure-ecommerce-DB"><b>Azure E-Commerce DB</b></a></td>
+    <td>MySQL schema with a Redis cache for sessions, carts and hot items, plus Power BI dashboards.</td>
+    <td><sub>MySQL · Redis · Azure</sub></td>
+  </tr>
+  <tr>
+    <td><a href="https://github.com/KhangPhanTZ/Machine-learning"><b>Machine Learning</b></a></td>
+    <td>Notebooks and experiments: preprocessing, classic models, metrics and visualization.</td>
+    <td><sub>Python · NumPy · Matplotlib</sub></td>
+  </tr>
+</table>
